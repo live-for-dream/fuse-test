@@ -2,18 +2,23 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_INIT([fuse-test], [0.0.1], [891873395@qq.com])
 AC_CONFIG_SRCDIR([xmp/xmp.c])
 AC_CONFIG_HEADERS([config.h])
+AM_INIT_AUTOMAKE([fuse-test], [0.0.1]
+)
 
 # Checks for programs.
 AC_PROG_CC
-
+AM_CFLAGS=-D_FILE_OFFSET_BITS=64 -g
 # Checks for libraries.
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/time.h unistd.h])
-
+AC_CHECK_LIB(fuse, fuse_main, [], [
+	echo "error fuse not found" 
+	exit -1
+	])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_UID_T
 AC_C_INLINE
@@ -25,5 +30,7 @@ AC_TYPE_SIZE_T
 AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([lchown memset mkdir mkfifo rmdir])
-
+AC_CONFIG_FILES([Makefile
+	oufs/Makefile
+	xmp/Makefile])
 AC_OUTPUT
